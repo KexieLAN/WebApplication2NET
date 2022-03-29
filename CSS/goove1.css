@@ -1,0 +1,15 @@
+﻿#myHeader {
+    background-color: lightblue;
+    color: black;
+    padding: 40px;
+    text-align: center;
+}
+
+#sub {
+    color: black;
+    text-align: center;
+}
+
+#importInfo {
+    background-color: forestgreen;
+}
