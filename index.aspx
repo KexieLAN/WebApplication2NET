@@ -14,6 +14,8 @@
         <p id="sub">Regional security <strong>alarm and control system</strong></p>
         <hr />
         <br />
+        <img src="./img/computer.png" alt="Please Refreash" style="width: 215px; height: 217px" />
+        <img src="./img/computer.png" alt="Please Refreash" style="width: 215px; height: 217px" />
     </form>
 </body>
 </html>
