@@ -13,3 +13,8 @@
 #importInfo {
     background-color: forestgreen;
 }
+
+#table_show_box {
+    border: aqua solid 1px;
+    background-color: azure;
+}
