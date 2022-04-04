@@ -11,12 +11,17 @@
 </head>
 <body>
 <form id="form1" runat="server">
-        <a id="top"><h1 id="myHeader">区域安全警报与控制系统</h1></a>
+        <a><h1 id="myHeader">区域安全警报与控制系统</h1></a>
         <p id="sub">Regional Security <strong>Alarm and Control System</strong>&nbsp;&copy;</p>
+    <hr />
+    <!--导航栏-->
+    <nav id="navZone">
+            <a href="index.aspx">主页</a>
+    </nav>
         <hr />
         <br />
-        <img src="/img/computer.png" alt="区域监视器" style="width: 215px; height: 217px"/>
-        <img src="/img/computer.png" alt="区域监视器" style="width: 215px; height: 217px" />
+        <img src="./img/computer.png" alt="区域监视器" style="width: 215px; height: 217px"/>
+        <img src="./img/computer.png" alt="区域监视器" style="width: 215px; height: 217px" />
     </form>
 <!----表格---->
     <div>
@@ -31,9 +36,9 @@
     </div>
 <!----链接---->
     <div>
-        <a href="https://www.bilibili.com" target="_blank">项目支持</a>
+        <a href="error.html">项目支持</a>
         <a href="Report/Report.txt">报告导出</a>
-        <a href="#top">回到顶部</a>
+        <a href="#">回到顶部</a>
     </div>
 </body>
 </html>

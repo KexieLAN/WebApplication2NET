@@ -5,6 +5,12 @@
     text-align: center;
 }
 
+#navZone {
+    background-color: aquamarine;
+    color: black;
+    padding: 5px;
+}
+
 #sub {
     color: black;
     text-align: center;
