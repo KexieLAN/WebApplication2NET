@@ -7,11 +7,12 @@
     <link href="./CSS/goove1.css" rel="stylesheet"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>课程设计先导程序</title>
+    <meta name="description" content="先导程序，正处于测试阶段"/>
 </head>
 <body>
 <form id="form1" runat="server">
         <a id="top"><h1 id="myHeader">区域安全警报与控制系统</h1></a>
-        <p id="sub">Regional Security <strong>Alarm and Control System</strong></p>
+        <p id="sub">Regional Security <strong>Alarm and Control System</strong>&nbsp;&copy;</p>
         <hr />
         <br />
         <img src="/img/computer.png" alt="区域监视器" style="width: 215px; height: 217px"/>
