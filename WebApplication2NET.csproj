@@ -58,11 +58,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CSS\goove1.css" />
-    <Content Include="error.html" />
     <Content Include="Report\Report.txt" />
     <Content Include="img\computer.png" />
     <Content Include="Web.config" />
     <Content Include="index.aspx" />
+    <Content Include="error_access.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,6 +72,13 @@
     </Compile>
     <Compile Include="index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="error_access.aspx.cs">
+      <DependentUpon>error_access.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="error_access.aspx.designer.cs">
+      <DependentUpon>error_access.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

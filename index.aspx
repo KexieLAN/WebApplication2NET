@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
 <head runat="server">
     <link href="./CSS/goove1.css" rel="stylesheet"/>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>课程设计先导程序</title>
     <meta name="description" content="先导程序，正处于测试阶段"/>
 </head>
@@ -16,7 +16,7 @@
     <hr />
     <!--导航栏-->
     <nav id="navZone">
-            <a href="index.aspx">主页</a>
+        <a href="index.aspx">主页</a>
     </nav>
         <hr />
         <br />
@@ -36,7 +36,7 @@
     </div>
 <!----链接---->
     <div>
-        <a href="error.html">项目支持</a>
+        <a href="error_access.aspx">项目支持</a>
         <a href="Report/Report.txt">报告导出</a>
         <a href="#">回到顶部</a>
     </div>

@@ -24,3 +24,11 @@
     border: aqua solid 1px;
     background-color: azure;
 }
+
+#notFound {
+    background-color: crimson;
+    color: black;
+    padding: 40px;
+    text-align: center;
+    align-self: center;
+}
