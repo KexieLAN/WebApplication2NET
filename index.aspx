@@ -8,37 +8,33 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>课程设计先导程序</title>
     <meta name="description" content="先导程序，正处于测试阶段"/>
+    <style type="text/css">
+        #form1 {
+            font-family: MiSans;
+        }
+    </style>
 </head>
 <body>
 <form id="form1" runat="server">
         <a><h1 id="myHeader">区域安全警报与控制系统</h1></a>
-        <p id="sub">Regional Security <strong>Alarm and Control System</strong>&nbsp;&copy;</p>
+        <p id="sub" align="center">Regional Security <strong>Alarm and Control System</strong>&nbsp;&copy;</p>
     <hr />
     <!--导航栏-->
     <nav id="navZone">
-        <a href="index.aspx">主页</a>
+        <asp:HyperLink CssClass="sub" ID="HyperLink_Home" runat="server" Font-Bold="True" Font-Names="MiSans" NavigateUrl="~/index.aspx" Width="50px">主页</asp:HyperLink>
+        <asp:HyperLink CssClass="sub" ID="HyperLink_Monitor" runat="server" NavigateUrl="~/error_access.aspx" Width="50px">监视</asp:HyperLink>
     </nav>
+        <asp:Button ID="Button_Start" runat="server" Text="开始监视" Font-Size="Small" style="font-weight: 700" OnClick="Button_Start_Click" />
+        <asp:Button ID="Button_Stop" runat="server" Text="停止监视" style="font-weight: 700" />
+        <br />
+        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
         <hr />
         <br />
-        <img src="./img/computer.png" alt="区域监视器" style="width: 215px; height: 217px"/>
-        <img src="./img/computer.png" alt="区域监视器" style="width: 215px; height: 217px" />
-    </form>
-<!----表格---->
-    <div>
-        <table id="table_show_box">
-            <tr  id="show_box">
-                <th>区域</th><th>状态</th><th>警报</th>
-            </tr>
-            <tr ><td>#0</td><td> Dangerous</td><td>Fire</td></tr>
-            <tr ><td>#1</td><td>Safe</td><td>NULL</td></tr>
-            <tr ><td>#2</td><td>Damage</td><td>Explode</td></tr>
-        </table>
-    </div>
-<!----链接---->
     <div>
         <a href="error_access.aspx">项目支持</a>
         <a href="Report/Report.txt">报告导出</a>
         <a href="#">回到顶部</a>
     </div>
+</form>
 </body>
 </html>
