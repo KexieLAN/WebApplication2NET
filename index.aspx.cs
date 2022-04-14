@@ -11,9 +11,10 @@ namespace WebApplication2NET
     {
         protected void Button_Start_Click(object sender, EventArgs e)
         {
+            //Label1.Text = "Hello";
             Progress p = new Progress();
-            p.Data_Process(Label1);
-            
+            p.Data_Process(this.Label1);
+            TextBox1.Text = Label1.Text;
         }
 
         public class Filed_Info
@@ -82,8 +83,8 @@ namespace WebApplication2NET
             public void Data_Process(Label label)
             {
                 //byte[] bufferBytes = new byte[] { 0 };
-                /*//系统信息Test
-                byte[] bufferBytes = new byte[]
+                //系统信息Test
+                /*byte[] bufferBytes = new byte[]
                 {0x51,0x4E,0x00,0x10,
                     0x23,
                     0x60,
@@ -91,10 +92,10 @@ namespace WebApplication2NET
                     0x01,
                     0x01,0x00,0x01,0x00,0x02,0x00,0x03,
                     0x12,0x45 };
+                
                 */
-
                 //故障信息Test
-                /*
+                
                 byte[] bufferBytes = new byte[]
                 {0x51,0x4E,0x00,0x10,
                     0x23,
@@ -110,9 +111,9 @@ namespace WebApplication2NET
                     0x00,
 
                     0x12,0x45 };
-                */
+                
                 //分区信息Test
-                byte[] bufferBytes = new byte[]
+                /*byte[] bufferBytes = new byte[]
                 {0x51,0x4E,0x00,0x10,
                 0x23,
                 0xA0,
@@ -134,7 +135,7 @@ namespace WebApplication2NET
                 0x00,0x01,
 
                 0x12,0x45 };
-
+                */
                 //探测器信息Test
 
                 //灭火器信息Test
@@ -155,12 +156,9 @@ namespace WebApplication2NET
 
                 */
                 //无关代码
-                //bufferBytes = Convert.FromBase64String(Console.ReadLine());
                 Info_Adepter info_Adepter = new Info_Adepter();
 
                 Transform_Info_From_T tmp = info_Adepter.String_2_Struct(bufferBytes);
-
-                info_Adepter.Show_Info(tmp);
 
                 Data_Parsing dataParsing = new Data_Parsing();
 
@@ -170,7 +168,7 @@ namespace WebApplication2NET
                         info_Adepter.Show_Info(dataParsing.sysInfos, dataParsing.sysInfos.Count, dataParsing.sysInfos_num,label);
                         break;
                     case 0x70:
-                        info_Adepter.Show_Info(dataParsing.bugInfos, dataParsing.bugInfos.Count, dataParsing.bugInfos_num);
+                        info_Adepter.Show_Info(dataParsing.bugInfos, dataParsing.bugInfos.Count, dataParsing.bugInfos_num,label);
                         break;
                     case 0x80:
                         info_Adepter.Show_Info(dataParsing.partitionInfos, dataParsing.partitionInfos.Count, dataParsing.partitionInfos_num);
@@ -183,8 +181,6 @@ namespace WebApplication2NET
                         break;
                         ;
                 }
-
-                Console.ReadKey();
             }
         }
 
@@ -250,8 +246,8 @@ namespace WebApplication2NET
                 int poi = src_Info.GetUpperBound(0);
                 carry.CRC = src_Info[poi - 1];
                 carry.END = src_Info[poi];
-                carry.Data = new byte[poi - 8];
-                Array.Copy(src_Info, 8, carry.Data, 0, poi - 8);
+                carry.Data = new byte[poi - 9];
+                Array.Copy(src_Info, 8, carry.Data, 0, poi - 9);
                 //carry.Data = src_Info[8..(poi - 1)];
                 return carry;
             }
@@ -293,40 +289,56 @@ namespace WebApplication2NET
 
             public void Show_Info(List<Sys_Info> sysInfos, int l, int count, Label label)
             {
-                if (count == 0x03)
+                StringBuilder ss = new StringBuilder();
+                if (count == 0x01)
                 {
                     for (int i = 0; i < l; i++)
                     {
-                        string ss;
-                        
-                        Console.WriteLine("总报警个数{0} ", sysInfos[i].waring_count);
-                        Console.WriteLine("总故障个数{0} ", sysInfos[i].bug_count);
-                        Console.WriteLine("总探测器个数{0} ", sysInfos[i].detector_count);
+                        ss.Append("总报警个数 ");
+                        ss.AppendLine(sysInfos[i].waring_count.ToString());
+                        ss.Append("总故障个数 ");
+                        ss.AppendLine(sysInfos[i].bug_count.ToString());
+                        ss.Append("总探测器个数 ");
+                        ss.AppendLine(sysInfos[i].detector_count.ToString());
                     }
                 }
                 else
                 {
-                    Console.WriteLine("读取失败");
+                    ss.Append("读取信息失败");
                 }
+                label.Text = ss.ToString();
             }
 
-            public void Show_Info(List<Bug_Info> bugInfos, int l, int count)
+            public void Show_Info(List<Bug_Info> bugInfos, int l, int count,Label label)
             {
+                StringBuilder ss = new StringBuilder();
                 if (count != 0x00)
                 {
                     for (int i = 0; i < l; i++)
                     {
-                        Console.WriteLine("预留扩展  {0} {1}", bugInfos[i].reserved1, bugInfos[i].reserved2);
-                        Console.WriteLine("防护区  {0}", bugInfos[i].def_zone);
-                        Console.WriteLine("设备类型  {0}", bugInfos[i].device_type);
-                        Console.WriteLine("设备编号  {0} ", bugInfos[i].device_number);
-                        Console.WriteLine("故障码  {0}", bugInfos[i].bug_code);
+                        ss.Append("预留扩展 ");
+                        ss.Append(bugInfos[i].reserved1.ToString());
+                        ss.AppendLine(bugInfos[i].reserved2.ToString());
+                        //Console.WriteLine("预留扩展  {0} {1}", bugInfos[i].reserved1, bugInfos[i].reserved2);
+                        ss.Append("防护区 ");
+                        ss.AppendLine(bugInfos[i].def_zone.ToString());
+                        //Console.WriteLine("防护区  {0}", bugInfos[i].def_zone);
+                        ss.Append("设备类型 ");
+                        ss.AppendLine(bugInfos[i].device_type.ToString());
+                        //Console.WriteLine("设备类型  {0}", bugInfos[i].device_type);
+                        ss.Append("设备类型 ");
+                        ss.AppendLine(bugInfos[i].device_number.ToString());
+                        //Console.WriteLine("设备类型  {0} ", bugInfos[i].device_number);
+                        ss.Append("设备类型 ");
+                        ss.AppendLine(bugInfos[i].bug_code.ToString());
+                        //Console.WriteLine("设备类型  {0}", bugInfos[i].bug_code);
                     }
                 }
                 else
                 {
-                    Console.WriteLine("读取失败");
+                    ss.Append("读取失败");
                 }
+                label.Text = ss.ToString();
             }
 
             public void Show_Info(List<Partition_Info> partitionInfos, int l, int count)
@@ -588,6 +600,10 @@ namespace WebApplication2NET
             }
         }
 
+        protected void Button_Stop_Click(object sender, EventArgs e)
+        {
+            Label1.Text = "已停止记录";
+        }
     }
 
 }

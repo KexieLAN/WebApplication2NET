@@ -25,10 +25,12 @@
         <asp:HyperLink CssClass="sub" ID="HyperLink_Monitor" runat="server" NavigateUrl="~/error_access.aspx" Width="50px">监视</asp:HyperLink>
     </nav>
         <asp:Button ID="Button_Start" runat="server" Text="开始监视" Font-Size="Small" style="font-weight: 700" OnClick="Button_Start_Click" />
-        <asp:Button ID="Button_Stop" runat="server" Text="停止监视" style="font-weight: 700" />
+        <asp:Button ID="Button_Stop" runat="server" Text="停止监视" style="font-weight: 700" OnClick="Button_Stop_Click" />
         <br />
-        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-        <hr />
+    <asp:Label ID="Label1" runat="server" Text="Label" OnDataBinding="Button_Start_Click"></asp:Label>
+        <br />
+        <asp:TextBox ID="TextBox1" runat="server" Height="89px" ReadOnly="True" TextMode="MultiLine" Width="627px"></asp:TextBox>
+    <hr />
         <br />
     <div>
         <a href="error_access.aspx">项目支持</a>
