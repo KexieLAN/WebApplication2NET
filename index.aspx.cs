@@ -1,187 +1,252 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace WebApplication2NET
 {
+    public class Filed_Info
+    {
+
+    }
+    public class Sys_Info
+    {
+        //public Sys_Info per;
+        public ushort waring_count;     //总报警个数
+        public ushort bug_count;         //总故障个数
+        public ushort detector_count;  //总探测器个数
+                                       //public Sys_Info next;
+    }
+    public class Bug_Info
+    {
+        //public Bug_Info per;
+        public byte reserved1;          //预留扩展
+        public byte reserved2;
+        public byte def_zone;           //防护区
+        public byte device_type;        //设备类型
+        public byte device_number;  //设备编号
+        public byte bug_code;           //故障代码
+                                        //public Bug_Info next;
+    }
+    public class Partition_Info
+    {
+        //public Partition_Info per;
+        public ushort reserved;         //预留扩展
+        public ushort def_zone;         //防护区
+        public ushort waring_level;     //警报等级
+        public ushort bug;                  //故障
+        public ushort handla_mode;  //手动模式
+        public ushort auto_mode;      //自动模式
+        public ushort handla_boot;      //手动启动
+        public ushort handla_shut;      //手动急停
+        public ushort boot_ctrl;            //启动控制
+        public ushort delay;                //延时
+        public ushort spray_start;   //启动喷洒
+        public ushort spraying;             //喷洒
+                                            //public Partition_Info next;
+    }
+    public class Detector_Info
+    {
+        //public Detector_Info per;
+        public ushort reserved;         //预留扩展
+        public ushort def_zone;         //防护区
+        public ushort type;                 //类型
+        public ushort ID;                   //ID
+        public ushort waring_level;     //警报等级
+        public ushort temperaturer;     //温度
+        public ushort CO;                   //CO
+        public ushort VOC;                  //VOC
+        public ushort smoke;                //烟雾
+                                            //public Detector_Info next;
+    }
+    public class Fire_Extinguisher_Info
+    {
+        //public Detector_Info per;
+        public ushort sharpNumber;
+        //public Detector_Info next;
+    }
+
     public partial class WebForm1 : System.Web.UI.Page
     {
+        public static List<Sys_Info> sysInfos = new List<Sys_Info>();
+        public static byte sysInfos_num;
+
+        public static List<Bug_Info> bugInfos = new List<Bug_Info>();
+        public static byte bugInfos_num;
+
+        public static List<Partition_Info> partitionInfos = new List<Partition_Info>();
+        public static byte partitionInfos_num;
+
+        public static List<Detector_Info> detectorInfos = new List<Detector_Info>();
+        public static byte detectorInfos_num;
+
+        public static List<Fire_Extinguisher_Info> fireExtinguisherInfos = new List<Fire_Extinguisher_Info>();
+        public static byte fireExtinguisherInfos_num;
+
+        private Thread bks;
+        private List_op listOP = new List_op();
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            bks = new Thread(Data_Process);
+            bks.IsBackground = true;
+        }
+
         protected void Button_Start_Click(object sender, EventArgs e)
         {
-            //Label1.Text = "Hello";
-            Progress p = new Progress();
-            p.Data_Process(this.Label1);
-            TextBox1.Text = Label1.Text;
+            listOP.List_Clearn();
+            bks.Start();
         }
 
-        public class Filed_Info
+        public void Data_Process()
         {
+            //byte[] bufferBytes = new byte[] { 0 };
+            //系统信息Test
+            /*byte[] bufferBytes = new byte[]
+            {0x51,0x4E,0x00,0x10,
+                0x23,
+                0x60,
+                0x00,
+                0x01,
+                0x01,0x00,0x01,0x00,0x02,0x00,0x03,
+                0x12,0x45 };
 
-        }
-        public class Sys_Info
-        {
-            //public Sys_Info per;
-            public ushort waring_count;     //总报警个数
-            public ushort bug_count;         //总故障个数
-            public ushort detector_count;  //总探测器个数
-                                           //public Sys_Info next;
-        }
-        public class Bug_Info
-        {
-            //public Bug_Info per;
-            public byte reserved1;          //预留扩展
-            public byte reserved2;
-            public byte def_zone;           //防护区
-            public byte device_type;        //设备类型
-            public byte device_number;  //设备编号
-            public byte bug_code;           //故障代码
-                                            //public Bug_Info next;
-        }
-        public class Partition_Info
-        {
-            //public Partition_Info per;
-            public ushort reserved;         //预留扩展
-            public ushort def_zone;         //防护区
-            public ushort waring_level;     //警报等级
-            public ushort bug;                  //故障
-            public ushort handla_mode;  //手动模式
-            public ushort auto_mode;      //自动模式
-            public ushort handla_boot;      //手动启动
-            public ushort handla_shut;      //手动急停
-            public ushort boot_ctrl;            //启动控制
-            public ushort delay;                //延时
-            public ushort spray_start;   //启动喷洒
-            public ushort spraying;             //喷洒
-                                                //public Partition_Info next;
-        }
-        public class Detector_Info
-        {
-            //public Detector_Info per;
-            public ushort reserved;         //预留扩展
-            public ushort def_zone;         //防护区
-            public ushort type;                 //类型
-            public ushort ID;                   //ID
-            public ushort waring_level;     //警报等级
-            public ushort temperaturer;     //温度
-            public ushort CO;                   //CO
-            public ushort VOC;                  //VOC
-            public ushort smoke;                //烟雾
-                                                //public Detector_Info next;
-        }
-        public class Fire_Extinguisher_Info
-        {
-            //public Detector_Info per;
-            public ushort sharpNumber;
-            //public Detector_Info next;
+            */
+            //故障信息Test
+
+            byte[][] bufferBytes = new byte[3][]
+            {
+                    new byte[]{
+                        0x51, 0x4E, 0x00, 0x10,
+                        0x23,
+                        0x60,
+                        0x00,
+                        0x01,
+                        0x01, 0x00, 0x01, 0x00, 0x02, 0x00, 0x03,
+                        0x12, 0x45
+                    },
+                    new byte[]{
+                        0x51, 0x4E, 0x00, 0x10,
+                        0x23,
+                        0x70,
+                        0x00,
+                        0x01,
+
+                        0x01,
+                        0x00, 0x00,
+                        0x01,
+                        0x10,
+                        0xFF,
+                        0x00,
+
+                        0x12, 0x45
+                    },
+                    new byte[]{
+                        0x51, 0x4E, 0x00, 0x10,
+                        0x23,
+                        0x80,
+                        0x00,
+                        0x01,
+
+                        0x01,
+                        0x00, 0x00,
+                        0x01, 0x02,
+                        0x00, 0x01,
+                        0xFF, 0xFF,
+                        0x00, 0x01,
+                        0x00, 0x01,
+                        0x00, 0x01,
+                        0x00, 0x01,
+                        0x00, 0x01,
+                        0x00, 0x01,
+                        0x00, 0x01,
+                        0x00, 0x01,
+
+                        0x12, 0x45
+                    }
+            };
+
+            //分区信息Test
+            /*byte[] bufferBytes = new byte[]
+            {0x51,0x4E,0x00,0x10,
+            0x23,
+            0xA0,
+            0x00,
+            0x01,
+
+            0x01,
+            0x00,0x00,
+            0x01,0x02,
+            0x00,0x01,
+            0xFF,0xFF,
+            0x00,0x01,
+            0x00,0x01,
+            0x00,0x01,
+            0x00,0x01,
+            0x00,0x01,
+            0x00,0x01,
+            0x00,0x01,
+            0x00,0x01,
+
+            0x12,0x45 };
+            */
+            //探测器信息Test
+
+            //灭火器信息Test
+
+            /*//网络相关代码
+            //SocketAddress add = new SocketAddress(AddressFamily.InterNetwork);
+            IPAddress ipAddress = new IPAddress(new byte[] {127, 0, 0, 1});
+            int pot=Convert.ToInt32(Console.ReadLine());
+            IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, pot);
+
+            //创建Socket
+            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            //绑定地址
+            socket.Bind(ipEndPoint);
+            socket.Listen(100);//监听
+            Socket temp = socket.Accept();//接受链接
+            temp.Receive(bufferBytes);
+
+            */
+            //无关代码
+            listOP.List_Clearn();
+            Info_Adepter info_Adepter = new Info_Adepter();
+            Transform_Info_From_T tmp = new Transform_Info_From_T();
+            Data_Parsing dataParsing = new Data_Parsing();
+            for (int i = 0; i < 3; i++)
+                {
+                    tmp = info_Adepter.String_2_Struct(bufferBytes[i]);
+
+                    switch (dataParsing.Function_Code_Judge(tmp))
+                    {
+                        case 0x60:
+                            info_Adepter.Show_Info(sysInfos, sysInfos.Count, sysInfos_num, TextBox1);
+                            break;
+                        case 0x70:
+                            info_Adepter.Show_Info(bugInfos, bugInfos.Count, bugInfos_num, TextBox2);
+                            break;
+                        case 0x80:
+                            info_Adepter.Show_Info(partitionInfos, partitionInfos.Count, partitionInfos_num, TextBox3);
+                            break;
+                        case 0x90:
+                            info_Adepter.Show_Info(detectorInfos, detectorInfos.Count, detectorInfos_num);
+                            break;
+                        case 0xA0:
+                            info_Adepter.Show_Info(fireExtinguisherInfos, fireExtinguisherInfos.Count, fireExtinguisherInfos_num);
+                            break;
+                            ;
+                    }
+                }
+            //Transform_Info_From_T tmp = info_Adepter.String_2_Struct(bufferBytes);
         }
 
         public class Progress
         {
-            public void Data_Process(Label label)
-            {
-                //byte[] bufferBytes = new byte[] { 0 };
-                //系统信息Test
-                /*byte[] bufferBytes = new byte[]
-                {0x51,0x4E,0x00,0x10,
-                    0x23,
-                    0x60,
-                    0x00,
-                    0x01,
-                    0x01,0x00,0x01,0x00,0x02,0x00,0x03,
-                    0x12,0x45 };
-                
-                */
-                //故障信息Test
-                
-                byte[] bufferBytes = new byte[]
-                {0x51,0x4E,0x00,0x10,
-                    0x23,
-                    0x70,
-                    0x00,
-                    0x01,
-
-                    0x01,
-                    0x00,0x00,
-                    0x01,
-                    0x10,
-                    0xFF,
-                    0x00,
-
-                    0x12,0x45 };
-                
-                //分区信息Test
-                /*byte[] bufferBytes = new byte[]
-                {0x51,0x4E,0x00,0x10,
-                0x23,
-                0xA0,
-                0x00,
-                0x01,
-
-                0x01,
-                0x00,0x00,
-                0x01,0x02,
-                0x00,0x01,
-                0xFF,0xFF,
-                0x00,0x01,
-                0x00,0x01,
-                0x00,0x01,
-                0x00,0x01,
-                0x00,0x01,
-                0x00,0x01,
-                0x00,0x01,
-                0x00,0x01,
-
-                0x12,0x45 };
-                */
-                //探测器信息Test
-
-                //灭火器信息Test
-
-                /*//网络相关代码
-                //SocketAddress add = new SocketAddress(AddressFamily.InterNetwork);
-                IPAddress ipAddress = new IPAddress(new byte[] {127, 0, 0, 1});
-                int pot=Convert.ToInt32(Console.ReadLine());
-                IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, pot);
-
-                //创建Socket
-                Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                //绑定地址
-                socket.Bind(ipEndPoint);
-                socket.Listen(100);//监听
-                Socket temp = socket.Accept();//接受链接
-                temp.Receive(bufferBytes);
-
-                */
-                //无关代码
-                Info_Adepter info_Adepter = new Info_Adepter();
-
-                Transform_Info_From_T tmp = info_Adepter.String_2_Struct(bufferBytes);
-
-                Data_Parsing dataParsing = new Data_Parsing();
-
-                switch (dataParsing.Function_Code_Judge(tmp))
-                {
-                    case 0x60:
-                        info_Adepter.Show_Info(dataParsing.sysInfos, dataParsing.sysInfos.Count, dataParsing.sysInfos_num,label);
-                        break;
-                    case 0x70:
-                        info_Adepter.Show_Info(dataParsing.bugInfos, dataParsing.bugInfos.Count, dataParsing.bugInfos_num,label);
-                        break;
-                    case 0x80:
-                        info_Adepter.Show_Info(dataParsing.partitionInfos, dataParsing.partitionInfos.Count, dataParsing.partitionInfos_num);
-                        break;
-                    case 0x90:
-                        info_Adepter.Show_Info(dataParsing.detectorInfos, dataParsing.detectorInfos.Count, dataParsing.detectorInfos_num);
-                        break;
-                    case 0xA0:
-                        info_Adepter.Show_Info(dataParsing.fireExtinguisherInfos, dataParsing.fireExtinguisherInfos.Count, dataParsing.fireExtinguisherInfos_num);
-                        break;
-                        ;
-                }
-            }
+            
         }
 
         public struct Transform_Info_From_T
@@ -287,9 +352,10 @@ namespace WebApplication2NET
 
             }
 
-            public void Show_Info(List<Sys_Info> sysInfos, int l, int count, Label label)
+            public void Show_Info(List<Sys_Info> sysInfos, int l, int count, TextBox label)
             {
                 StringBuilder ss = new StringBuilder();
+                ss.Append("******************\n系统信息\n******************\n");
                 if (count == 0x01)
                 {
                     for (int i = 0; i < l; i++)
@@ -309,9 +375,10 @@ namespace WebApplication2NET
                 label.Text = ss.ToString();
             }
 
-            public void Show_Info(List<Bug_Info> bugInfos, int l, int count,Label label)
+            public void Show_Info(List<Bug_Info> bugInfos, int l, int count, TextBox label)
             {
                 StringBuilder ss = new StringBuilder();
+                ss.Append("******************\n错误信息\n******************\n");
                 if (count != 0x00)
                 {
                     for (int i = 0; i < l; i++)
@@ -326,10 +393,10 @@ namespace WebApplication2NET
                         ss.Append("设备类型 ");
                         ss.AppendLine(bugInfos[i].device_type.ToString());
                         //Console.WriteLine("设备类型  {0}", bugInfos[i].device_type);
-                        ss.Append("设备类型 ");
+                        ss.Append("设备编号 ");
                         ss.AppendLine(bugInfos[i].device_number.ToString());
                         //Console.WriteLine("设备类型  {0} ", bugInfos[i].device_number);
-                        ss.Append("设备类型 ");
+                        ss.Append("故障代码 ");
                         ss.AppendLine(bugInfos[i].bug_code.ToString());
                         //Console.WriteLine("设备类型  {0}", bugInfos[i].bug_code);
                     }
@@ -341,30 +408,45 @@ namespace WebApplication2NET
                 label.Text = ss.ToString();
             }
 
-            public void Show_Info(List<Partition_Info> partitionInfos, int l, int count)
+            public void Show_Info(List<Partition_Info> partitionInfos, int l, int count, TextBox text)
             {
+                StringBuilder ss = new StringBuilder();
+                ss.Append("******************\n分区信息\n******************\n");
                 if (count != 0x00)
                 {
                     for (int i = 0; i < l; i++)
                     {
-                        Console.WriteLine("预留扩展  {0}", partitionInfos[i].reserved);
-                        Console.WriteLine("防护区  {0}", partitionInfos[i].def_zone);
-                        Console.WriteLine("报警级别  {0}", partitionInfos[i].waring_level);
-                        Console.WriteLine("故障  {0} ", partitionInfos[i].bug);
-                        Console.WriteLine("手动模式  {0}", partitionInfos[i].handla_mode);
-                        Console.WriteLine("自动模式  {0}", partitionInfos[i].auto_mode);
-                        Console.WriteLine("手动启动  {0}", partitionInfos[i].handla_boot);
-                        Console.WriteLine("手动急停  {0}", partitionInfos[i].handla_shut);
-                        Console.WriteLine("启动控制  {0}", partitionInfos[i].boot_ctrl);
-                        Console.WriteLine("延时  {0}", partitionInfos[i].delay);
-                        Console.WriteLine("启动喷洒  {0}", partitionInfos[i].spray_start);
-                        Console.WriteLine("喷洒  {0}", partitionInfos[i].spraying);
+                        ss.Append("预留扩展  ");
+                        ss.AppendLine(partitionInfos[i].reserved.ToString());
+                        ss.Append("防护区  ");
+                        ss.Append(partitionInfos[i].def_zone.ToString());
+                        ss.Append("报警级别  ");
+                        ss.AppendLine(partitionInfos[i].waring_level.ToString());
+                        ss.Append("故障  ");
+                        ss.AppendLine(partitionInfos[i].bug.ToString());
+                        ss.Append("手动模式  ");
+                        ss.AppendLine(partitionInfos[i].handla_mode.ToString());
+                        ss.Append("自动模式 ");
+                        ss.AppendLine(partitionInfos[i].auto_mode.ToString());
+                        ss.Append("手动启动  ");
+                        ss.AppendLine(partitionInfos[i].handla_boot.ToString());
+                        ss.Append("手动急停 ");
+                        ss.AppendLine(partitionInfos[i].handla_shut.ToString());
+                        ss.Append("启动控制  ");
+                        ss.AppendLine(partitionInfos[i].boot_ctrl.ToString());
+                        ss.Append("延时  ");
+                        ss.AppendLine(partitionInfos[i].delay.ToString());
+                        ss.Append("启动喷洒  ");
+                        ss.AppendLine(partitionInfos[i].spray_start.ToString());
+                        ss.Append("喷洒  ");
+                        ss.AppendLine(partitionInfos[i].spraying.ToString());
                     }
                 }
                 else
                 {
-                    Console.WriteLine("读取失败");
+                    ss.Append("读取失败");
                 }
+                text.Text = ss.ToString();
             }
 
             public void Show_Info(List<Detector_Info> detectorInfos, int l, int count)
@@ -391,6 +473,7 @@ namespace WebApplication2NET
         public class Data_Parsing //用来实现对结构体的解析
         {
             //解析上传的报文的功能代码
+            /*
             public List<Sys_Info> sysInfos = new List<Sys_Info>();
             public byte sysInfos_num;
 
@@ -405,7 +488,7 @@ namespace WebApplication2NET
 
             public List<Fire_Extinguisher_Info> fireExtinguisherInfos = new List<Fire_Extinguisher_Info>();
             public byte fireExtinguisherInfos_num;
-
+            */
             //判定报文需要如何解析。
             public byte Function_Code_Judge(Transform_Info_From_T src)
             {
@@ -600,10 +683,41 @@ namespace WebApplication2NET
             }
         }
 
+        public class List_op
+        {
+            public void List_Clearn()
+            {
+                sysInfos.Clear();
+                bugInfos.Clear();
+                partitionInfos.Clear();
+                detectorInfos.Clear();
+                fireExtinguisherInfos.Clear();
+                sysInfos_num = 0;
+                bugInfos_num = 0;
+                partitionInfos_num = 0;
+                detectorInfos_num = 0;
+                fireExtinguisherInfos_num = 0;
+            }
+        }
+
         protected void Button_Stop_Click(object sender, EventArgs e)
         {
             Label1.Text = "已停止记录";
+            try
+            {
+                bks.Abort();
+                listOP.List_Clearn();
+            }
+            catch (Exception exception)
+            {
+
+            }
+            finally
+            {
+
+            }
         }
+        
     }
 
 }

@@ -16,22 +16,23 @@
 </head>
 <body>
 <form id="form1" runat="server">
-        <a><h1 id="myHeader">区域安全警报与控制系统</h1></a>
-        <p id="sub" align="center">Regional Security <strong>Alarm and Control System</strong>&nbsp;&copy;</p>
+        <a><h1 class="myHeader">区域安全警报与控制系统</h1></a>
+        <p class="sub">Regional Security <strong>Alarm and Control System</strong>&nbsp;&copy;</p>
     <hr />
     <!--导航栏-->
-    <nav id="navZone">
+    <nav class="navZone">
         <asp:HyperLink CssClass="sub" ID="HyperLink_Home" runat="server" Font-Bold="True" Font-Names="MiSans" NavigateUrl="~/index.aspx" Width="50px">主页</asp:HyperLink>
         <asp:HyperLink CssClass="sub" ID="HyperLink_Monitor" runat="server" NavigateUrl="~/error_access.aspx" Width="50px">监视</asp:HyperLink>
     </nav>
-        <asp:Button ID="Button_Start" runat="server" Text="开始监视" Font-Size="Small" style="font-weight: 700" OnClick="Button_Start_Click" />
-        <asp:Button ID="Button_Stop" runat="server" Text="停止监视" style="font-weight: 700" OnClick="Button_Stop_Click" />
+        <asp:Button CssClass="buttonSharp" ID="Button_Start" runat="server" Text="开始监视" Font-Size="Small" style="font-weight: 700" OnClick="Button_Start_Click" />
+        <asp:Button CssClass="buttonSharp" ID="Button_Stop" runat="server" Text="停止监视" style="font-weight: 700" OnClick="Button_Stop_Click" />
         <br />
     <asp:Label ID="Label1" runat="server" Text="Label" OnDataBinding="Button_Start_Click"></asp:Label>
         <br />
-        <asp:TextBox ID="TextBox1" runat="server" Height="89px" ReadOnly="True" TextMode="MultiLine" Width="627px"></asp:TextBox>
+        <asp:TextBox ID="TextBox1" runat="server" Height="250px" ReadOnly="True" TextMode="MultiLine" CssClass="text_show_box"></asp:TextBox>
+        <asp:TextBox ID="TextBox2" runat="server" Height="250px" ReadOnly="True" TextMode="MultiLine" CssClass="text_show_box"></asp:TextBox>
+        <asp:TextBox ID="TextBox3" runat="server" Height="250px" ReadOnly="True" TextMode="MultiLine" CssClass="text_show_box"></asp:TextBox>
     <hr />
-        <br />
     <div>
         <a href="error_access.aspx">项目支持</a>
         <a href="Report/Report.txt">报告导出</a>
