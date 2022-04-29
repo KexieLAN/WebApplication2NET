@@ -22,5 +22,15 @@ namespace WebApplication2NET.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://192.168.172.1:8018/WebService1.asmx")]
+        public string WebApplication2NET_WebReference_WebService1 {
+            get {
+                return ((string)(this["WebApplication2NET_WebReference_WebService1"]));
+            }
+        }
     }
 }

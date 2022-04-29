@@ -9,10 +9,13 @@
     <title>ERROR 404 NOT FOUND</title>
 </head>
 <body>
+    <form id="form1" runat="server">
     <h1 class="notFound"><strong>ERROR 404</strong> </h1>
     <h2 align="center"><strong>NOT FOUND</strong></h2>
     <p align="center">当你看到这个页面时，你已经来到了未开发的区域</p>
     <p align="center">&darr;接下来点击下方的超链接，回到已知的区域&darr;</p>
     <p align="center"><a href="index.aspx">回到主页</a></p>
+        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+    </form>
 </body>
 </html>
