@@ -63,11 +63,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Web References\WebReference\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Web References\WebReference\WebService1.wsdl" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -80,15 +75,46 @@
     <Content Include="App_Data\Database1_log.ldf">
       <DependentUpon>Database1.mdf</DependentUpon>
     </Content>
+    <Content Include="BugInfo.aspx" />
     <Content Include="CSS\goove1.css" />
+    <Content Include="DetectorInfo.aspx" />
+    <Content Include="FireExtinguisherInfo.aspx" />
+    <Content Include="PartitionInfo.aspx" />
     <Content Include="Report\Report.txt" />
     <Content Include="img\computer.png" />
-    <None Include="Web References\WebReference\WebService1.disco" />
     <Content Include="Web.config" />
     <Content Include="index.aspx" />
     <Content Include="error_access.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BugInfo.aspx.cs">
+      <DependentUpon>BugInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BugInfo.aspx.designer.cs">
+      <DependentUpon>BugInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DetectorInfo.aspx.cs">
+      <DependentUpon>DetectorInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetectorInfo.aspx.designer.cs">
+      <DependentUpon>DetectorInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FireExtinguisherInfo.aspx.cs">
+      <DependentUpon>FireExtinguisherInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FireExtinguisherInfo.aspx.designer.cs">
+      <DependentUpon>FireExtinguisherInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PartitionInfo.aspx.cs">
+      <DependentUpon>PartitionInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PartitionInfo.aspx.designer.cs">
+      <DependentUpon>PartitionInfo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
@@ -108,11 +134,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Web References\WebReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
@@ -124,17 +145,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://192.168.172.1:8018/">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\WebReference\</RelPath>
-      <UpdateFromURL>http://192.168.172.1:8018/</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>WebApplication2NET_WebReference_WebService1</CachedSettingsPropName>
-    </WebReferenceUrl>
+    <ProjectReference Include="..\WindowsService1\WindowsService1.csproj">
+      <Project>{877b0243-0e80-4df1-8136-333fdc140d6c}</Project>
+      <Name>WindowsService1</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

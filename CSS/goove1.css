@@ -48,3 +48,9 @@
     width: fit-content;
     height: auto;
 }
+
+.table_bk {
+    align-items: center;
+    width: 800px;
+    height: auto;
+}

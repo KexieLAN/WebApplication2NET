@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 using System.Threading;
 using System.Web;
@@ -9,6 +11,8 @@ using System.Web.UI.WebControls;
 
 namespace WebApplication2NET
 {
+    #region 遗弃代码
+
     public class Filed_Info
     {
 
@@ -19,7 +23,7 @@ namespace WebApplication2NET
         public ushort waring_count;     //总报警个数
         public ushort bug_count;         //总故障个数
         public ushort detector_count;  //总探测器个数
-                                       //public Sys_Info next;
+        //public Sys_Info next;
     }
     public class Bug_Info
     {
@@ -30,7 +34,7 @@ namespace WebApplication2NET
         public byte device_type;        //设备类型
         public byte device_number;  //设备编号
         public byte bug_code;           //故障代码
-                                        //public Bug_Info next;
+        //public Bug_Info next;
     }
     public class Partition_Info
     {
@@ -47,7 +51,7 @@ namespace WebApplication2NET
         public ushort delay;                //延时
         public ushort spray_start;   //启动喷洒
         public ushort spraying;             //喷洒
-                                            //public Partition_Info next;
+        //public Partition_Info next;
     }
     public class Detector_Info
     {
@@ -61,7 +65,7 @@ namespace WebApplication2NET
         public ushort CO;                   //CO
         public ushort VOC;                  //VOC
         public ushort smoke;                //烟雾
-                                            //public Detector_Info next;
+        //public Detector_Info next;
     }
     public class Fire_Extinguisher_Info
     {
@@ -70,8 +74,12 @@ namespace WebApplication2NET
         //public Detector_Info next;
     }
 
+    #endregion
+
     public partial class WebForm1 : System.Web.UI.Page
     {
+        #region 遗弃代码
+        /*
         public static List<Sys_Info> sysInfos = new List<Sys_Info>();
         public static byte sysInfos_num;
 
@@ -88,7 +96,7 @@ namespace WebApplication2NET
         public static byte fireExtinguisherInfos_num;
 
         //private Thread bks;
-        
+
         /*
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -96,19 +104,59 @@ namespace WebApplication2NET
             bks.IsBackground = true;
         }
         */
+
+        #endregion
+        string connectString = @"Data Source=KEXIELAN\SQLEXPRESS;Database=MySer;User ID=WebMSU;Pwd=LXY621621;";
+        private SqlConnection sConn;
+
         protected void Button_Start_Click(object sender, EventArgs e)
         {
-            Label1.Text = "开始记录";
-            WebReference.WebService1 webReference = new WebReference.WebService1();
-            //webReference.Data_Process();
-            TextBox1.Text = webReference.GetSysInfos();
+            sConn = new SqlConnection(connectString);
+            try
+            { 
+                sConn.Open(); 
+                Label_Sta.Text = "数据库连接成功，开始监视";
+            }
+            catch (Exception err) 
+            { 
+                Label_Sta.Text = "数据库连接失败，监视失败";
+            }
         }
 
         protected void Button_Stop_Click(object sender, EventArgs e)
         {
-            Label1.Text = "已停止记录";
+            Label_Sta.Text = "已停止";
         }
-        
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            #region MyRegion
+            /*
+            if (sConn==null)
+            {
+                sConn = new SqlConnection(connectString);
+                try
+                {
+                    sConn.Open();
+                    Label_Sta.Text = "数据库连接成功";
+                }
+                catch (Exception err)
+                {
+                    Label_Sta.Text = "数据库连接失败";
+                }
+            }
+            */
+            #endregion
+        }
+
+        protected void Page_Unload(object sender, EventArgs e)
+        {
+            if (sConn!=null)
+            {
+                sConn.Close();
+            }
+        }
+
     }
     
 }
