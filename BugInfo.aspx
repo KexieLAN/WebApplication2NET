@@ -26,26 +26,24 @@
     <asp:HyperLink CssClass="sub" ID="HyperLink_Partition" runat="server" NavigateUrl="~/PartitionInfo.aspx" Width="100px">分区信息</asp:HyperLink>
     <asp:HyperLink CssClass="sub" ID="HyperLink_Detector" runat="server" NavigateUrl="~/DetectorInfo.aspx" Width="125px">探测器信息</asp:HyperLink>
     <asp:HyperLink CssClass="sub" ID="HyperLink_FireExtinguisher" runat="server" NavigateUrl="~/FireExtinguisherInfo.aspx" Width="125px">灭火器信息</asp:HyperLink>
+    <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">登出</asp:LinkButton>
 </nav>
     <asp:Label ID="Label1" runat="server" Text="错误信息" BackColor="White" Font-Bold="True" Font-Size="X-Large"></asp:Label>
-    <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSourceBugInfo" ForeColor="#333333" CssClass="table_bk" EmptyDataText="尚未收取到任何数据，可能的原因：数据库内没有数据，请稍后点击“刷新”按钮查询" GridLines="None" OnPageIndexChanging="GridView1_PageIndexChanging">
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+    </asp:ScriptManager>
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <ContentTemplate>
+            <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSourceBugInfo" ForeColor="#333333" CssClass="table_bk" EmptyDataText="尚未收取到任何数据，可能的原因：数据库内没有数据，请点击“刷新”按钮查询或等待自动更新" GridLines="None" OnPageIndexChanging="GridView1_PageIndexChanging" AllowSorting="True" DataKeyNames="def_zone">
         <AlternatingRowStyle BackColor="White" />
         <Columns>
-            <asp:BoundField DataField="def_zone" HeaderText="防护区" SortExpression="def_zone">
-            <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-            <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+            <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
+            <asp:BoundField DataField="def_zone" HeaderText="def_zone" SortExpression="def_zone" ReadOnly="True">
             </asp:BoundField>
-            <asp:BoundField DataField="device_type" HeaderText="设备类型" NullDisplayText="N/A" SortExpression="device_type">
-            <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-            <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+            <asp:BoundField DataField="device_type" HeaderText="device_type" SortExpression="device_type">
             </asp:BoundField>
-            <asp:BoundField DataField="device_number" HeaderText="设备编号" NullDisplayText="N/A" SortExpression="device_number">
-            <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-            <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+            <asp:BoundField DataField="device_number" HeaderText="device_number" SortExpression="device_number">
             </asp:BoundField>
-            <asp:BoundField DataField="bug_code" HeaderText="错误代码" NullDisplayText="N/A" SortExpression="bug_code">
-            <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-            <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+            <asp:BoundField DataField="bug_code" HeaderText="bug_code" SortExpression="bug_code">
             </asp:BoundField>
         </Columns>
         <EditRowStyle BackColor="#2461BF" />
@@ -83,13 +81,43 @@
                                         CommandName="Page" Text="GO" />
                                 </PagerTemplate>
     </asp:GridView>
-    <asp:SqlDataSource ID="SqlDataSourceBugInfo" runat="server" ConnectionString="<%$ ConnectionStrings:MySerConnectionStringBugInfo %>" SelectCommand="SELECT * FROM [BugInfo]"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="SqlDataSourceBugInfo" runat="server" ConnectionString="<%$ ConnectionStrings:MySerConnectionStringBugInfo %>" SelectCommand="SELECT [def_zone], [device_type], [device_number], [bug_code] FROM [BugInfo]" DeleteCommand="DELETE FROM [BugInfo] WHERE [def_zone] = @def_zone" InsertCommand="INSERT INTO [BugInfo] ([def_zone], [device_type], [device_number], [bug_code]) VALUES (@def_zone, @device_type, @device_number, @bug_code)" UpdateCommand="UPDATE [BugInfo] SET [device_type] = @device_type, [device_number] = @device_number, [bug_code] = @bug_code WHERE [def_zone] = @def_zone">
+        <DeleteParameters>
+            <asp:Parameter Name="def_zone" Type="Int32" />
+        </DeleteParameters>
+        <InsertParameters>
+            <asp:Parameter Name="def_zone" Type="Int32" />
+            <asp:Parameter Name="device_type" Type="Int32" />
+            <asp:Parameter Name="device_number" Type="Int32" />
+            <asp:Parameter Name="bug_code" Type="Int32" />
+        </InsertParameters>
+        <UpdateParameters>
+            <asp:Parameter Name="device_type" Type="Int32" />
+            <asp:Parameter Name="device_number" Type="Int32" />
+            <asp:Parameter Name="bug_code" Type="Int32" />
+            <asp:Parameter Name="def_zone" Type="Int32" />
+        </UpdateParameters>
+            </asp:SqlDataSource>
+            <asp:Timer ID="TimerbugInfo" runat="server" Interval="6000">
+            </asp:Timer>
+        </ContentTemplate>
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="GridView1" EventName="PageIndexChanged" />
+            <asp:AsyncPostBackTrigger ControlID="TimerbugInfo" EventName="Tick" />
+            <asp:AsyncPostBackTrigger ControlID="GridView1" EventName="RowUpdated" />
+            <asp:AsyncPostBackTrigger ControlID="GridView1" EventName="RowDeleted" />
+            <asp:AsyncPostBackTrigger ControlID="GridView1" EventName="RowCreated" />
+        </Triggers>
+    </asp:UpdatePanel>
+    
     <hr />
     <asp:Button ID="ButtonCleanInfo" runat="server" Text="清空错误信息" OnClick="ButtonCleanInfo_Click" CssClass="buttonSharp" />
     <asp:Button ID="ButtonF" runat="server" CssClass="buttonSharp" OnClick="ButtonF_Click" Text="刷新" />
     <hr />
     <asp:Label ID="Label2" runat="server" Text="历史错误信息" Font-Bold="True" Font-Size="X-Large"></asp:Label>
-    <asp:GridView ID="GridView2" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSourceBugInfoHis" ForeColor="#333333" CssClass="table_bk" EmptyDataText="尚未收取到任何数据，可能的原因：数据库内没有数据，请稍后点击“刷新”按钮查询" GridLines="None" OnPageIndexChanging="GridView1_PageIndexChanging">
+    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+        <ContentTemplate>
+            <asp:GridView ID="GridView2" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSourceBugInfoHis" ForeColor="#333333" CssClass="table_bk" EmptyDataText="尚未收取到任何数据，可能的原因：数据库内没有数据，请点击“刷新”按钮查询或等待自动更新" GridLines="None" OnPageIndexChanging="GridView1_PageIndexChanging">
         <AlternatingRowStyle BackColor="White" />
         <Columns>
             <asp:BoundField DataField="def_zone" HeaderText="防护区" SortExpression="def_zone" NullDisplayText="N/A" >
@@ -145,6 +173,17 @@
                                 </PagerTemplate>
     </asp:GridView>
     <asp:SqlDataSource ID="SqlDataSourceBugInfoHis" runat="server" ConnectionString="<%$ ConnectionStrings:MySerConnectionString %>" SelectCommand="SELECT * FROM [BugInfo_History]"></asp:SqlDataSource>
+            <asp:Timer ID="TimerbugInfoHis" runat="server" Interval="6000">
+            </asp:Timer>
+        </ContentTemplate>
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="GridView2" EventName="PageIndexChanged" />
+            <asp:AsyncPostBackTrigger ControlID="TimerbugInfoHis" EventName="Tick" />
+            <asp:AsyncPostBackTrigger ControlID="GridView2" EventName="RowDeleted" />
+            <asp:AsyncPostBackTrigger ControlID="GridView2" EventName="RowUpdated" />
+        </Triggers>
+    </asp:UpdatePanel>
+    
     <hr />
     <asp:Button ID="ButtonClearHis" runat="server" OnClick="ButtonClearHis_Click" Text="清空历史错误信息" CssClass="buttonSharp" />
     <asp:Button ID="ButtonF2" runat="server" OnClick="ButtonF2_Click" Text="刷新" CssClass="buttonSharp" />

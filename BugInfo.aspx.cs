@@ -15,8 +15,16 @@ namespace WebApplication2NET
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["User"] == null)
+            {
+                Response.Redirect("LogIn.aspx");
+                return;
+            }
             sConn = new SqlConnection(connectString);
             sConn.Open();
+            GridView1.DataBind();
+            GridView2.DataBind();
+            //ListView1.DataBind();
         }
 
         protected void Page_Unload(object sender, EventArgs e)
@@ -86,6 +94,12 @@ namespace WebApplication2NET
 
             //得到新的值
             theGrid.PageIndex = newPageIndex;
+        }
+
+        protected void LinkButton1_Click(object sender, EventArgs e)
+        {
+            Session["User"] = null;
+            Response.Redirect("~/Login.aspx");
         }
     }
 }

@@ -51,6 +51,17 @@
 
 .table_bk {
     align-items: center;
+    margin: auto;
     width: 800px;
     height: auto;
+}
+
+.login {
+    align-items: center;
+    text-align: center;
+    margin: auto;
+}
+
+.chart {
+    margin: auto;
 }

@@ -17,7 +17,9 @@
 <body>
 <form id="form1" runat="server">
 <a><h1 class="myHeader">区域安全警报与控制系统</h1></a>
-<p class="sub">Regional Security <strong>Alarm and Control System</strong>&nbsp;&copy;</p>
+<p class="sub">Regional Security <strong>Alarm and Control System</strong>&nbsp;&copy;<asp:ScriptManager ID="ScriptManager1" runat="server">
+    </asp:ScriptManager>
+    </p>
 <hr />
 <!--导航栏-->
 <nav class="navZone">
@@ -26,9 +28,12 @@
     <asp:HyperLink CssClass="sub" ID="HyperLink_Partition" runat="server" NavigateUrl="~/PartitionInfo.aspx" Width="100px">分区信息</asp:HyperLink>
     <asp:HyperLink CssClass="sub" ID="HyperLink_Detector" runat="server" NavigateUrl="~/DetectorInfo.aspx" Width="125px">探测器信息</asp:HyperLink>
     <asp:HyperLink CssClass="sub" ID="HyperLink_FireExtinguisher" runat="server" Font-Bold="True" NavigateUrl="~/FireExtinguisherInfo.aspx" Width="125px">灭火器信息</asp:HyperLink>
+    <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">登出</asp:LinkButton>
 </nav>
     <asp:Label ID="Label1" runat="server" Text="灭火器信息" BackColor="White" Font-Bold="True" Font-Size="X-Large"></asp:Label>
-    <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSourceBugInfo" ForeColor="#333333" CssClass="table_bk" EmptyDataText="尚未收取到任何数据，可能的原因：数据库内没有数据，请稍后点击“刷新”按钮查询" GridLines="None" OnPageIndexChanging="GridView1_PageIndexChanging">
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <ContentTemplate>
+             <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSourceBugInfo" ForeColor="#333333" CssClass="table_bk" EmptyDataText="尚未收取到任何数据，可能的原因：数据库内没有数据，请点击“刷新”按钮查询或等待自动更新" GridLines="None" OnPageIndexChanging="GridView1_PageIndexChanging">
         <AlternatingRowStyle BackColor="White" />
         <Columns>
             <asp:BoundField DataField="sharpNumber" HeaderText="sharpNumber" SortExpression="sharpNumber">
@@ -72,12 +77,25 @@
                                 </PagerTemplate>
     </asp:GridView>
     <asp:SqlDataSource ID="SqlDataSourceBugInfo" runat="server" ConnectionString="<%$ ConnectionStrings:MySerConnectionString %>" SelectCommand="SELECT * FROM [FireExtinguisherInfo]"></asp:SqlDataSource>
+             <asp:Timer ID="TimerfeInfo" runat="server" Interval="6000">
+             </asp:Timer>
+        </ContentTemplate>
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="GridView1" EventName="PageIndexChanged" />
+            <asp:AsyncPostBackTrigger ControlID="TimerfeInfo" EventName="Tick" />
+            <asp:AsyncPostBackTrigger ControlID="GridView1" EventName="RowUpdated" />
+            <asp:AsyncPostBackTrigger ControlID="GridView1" EventName="RowCreated" />
+        </Triggers>
+    </asp:UpdatePanel>
+   
     <hr />
     <asp:Button ID="ButtonCleanInfo" runat="server" Text="清空灭火器信息" OnClick="ButtonCleanInfo_Click" CssClass="buttonSharp" />
     <asp:Button ID="ButtonF" runat="server" CssClass="buttonSharp" OnClick="ButtonF_Click" Text="刷新" />
     <hr />
     <asp:Label ID="Label2" runat="server" Text="历史灭火器信息" Font-Bold="True" Font-Size="X-Large"></asp:Label>
-    <asp:GridView ID="GridView2" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSourceBugInfoHis" ForeColor="#333333" CssClass="table_bk" EmptyDataText="尚未收取到任何数据，可能的原因：数据库内没有数据，请稍后点击“刷新”按钮查询" GridLines="None" OnPageIndexChanging="GridView1_PageIndexChanging">
+    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+        <ContentTemplate>
+            <asp:GridView ID="GridView2" runat="server" AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSourceBugInfoHis" ForeColor="#333333" CssClass="table_bk" EmptyDataText="尚未收取到任何数据，可能的原因：数据库内没有数据，请点击“刷新”按钮查询或等待自动更新" GridLines="None" OnPageIndexChanging="GridView1_PageIndexChanging">
         <AlternatingRowStyle BackColor="White" />
         <Columns>
             <asp:BoundField DataField="sharpNumber" HeaderText="sharpNumber" SortExpression="sharpNumber" >
@@ -121,6 +139,17 @@
                                 </PagerTemplate>
     </asp:GridView>
     <asp:SqlDataSource ID="SqlDataSourceBugInfoHis" runat="server" ConnectionString="<%$ ConnectionStrings:MySerConnectionString %>" SelectCommand="SELECT * FROM [FireExtinguisherInfo_History]"></asp:SqlDataSource>
+            <asp:Timer ID="TimerfeInfoHis" runat="server" Interval="6000">
+            </asp:Timer>
+        </ContentTemplate>
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="GridView2" EventName="PageIndexChanged" />
+            <asp:AsyncPostBackTrigger ControlID="TimerfeInfoHis" EventName="Tick" />
+            <asp:AsyncPostBackTrigger ControlID="GridView2" EventName="RowUpdated" />
+            <asp:AsyncPostBackTrigger ControlID="GridView2" EventName="RowCreated" />
+        </Triggers>
+    </asp:UpdatePanel>
+    
     <hr />
     <asp:Button ID="ButtonClearHis" runat="server" OnClick="ButtonClearHis_Click" Text="清空历史灭火器信息" CssClass="buttonSharp" />
     <asp:Button ID="ButtonF2" runat="server" OnClick="ButtonF2_Click" Text="刷新" CssClass="buttonSharp" />
