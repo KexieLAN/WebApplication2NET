@@ -1,53 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
-using System.Text;
-using System.Threading;
+using System.Linq;
 using System.Web;
-using System.Web.Security;
-using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace WebApplication2NET
 {
-    public partial class WebForm1 : System.Web.UI.Page
+    public partial class PartitionInfo : System.Web.UI.Page
     {
         string connectString = @"Data Source=KEXIELAN\SQLEXPRESS;Database=MySer;User ID=WebMSU;Pwd=LXY621621;";
         private SqlConnection sConn;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["User"]==null)
+            if (Session["User"] == null)
             {
                 Response.Redirect("LogIn.aspx");
                 return;
             }
             sConn = new SqlConnection(connectString);
             sConn.Open();
-            if (sConn==null)
-            {
-                Label_Sta.Text = "连接失败，请刷新页面";
-            }
-            else
-            {
-                Label_Sta.Text = "数据库连接成功";
-            }
             GridView1.DataBind();
             GridView2.DataBind();
-
         }
 
         protected void Page_Unload(object sender, EventArgs e)
         {
-            if (sConn!=null)
+            if (sConn != null)
             {
                 sConn.Close();
             }
         }
 
-        protected void GridView2_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        protected void ButtonCleanInfo_Click(object sender, EventArgs e)
+        {
+            string sqlString = "DELETE FROM PartitionInfo";
+            SqlCommand cmd = new SqlCommand(sqlString, sConn);
+            cmd.ExecuteNonQuery();
+        }
+
+        protected void ButtonClearHis_Click(object sender, EventArgs e)
+        {
+            string sqlString = "DELETE FROM PartitionInfo_History";
+            SqlCommand cmd = new SqlCommand(sqlString, sConn);
+            cmd.ExecuteNonQuery();
+        }
+
+        protected void ButtonF_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("PartitionInfo.aspx");
+        }
+
+        protected void ButtonF2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("PartitionInfo.aspx");
+        }
+
+        protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             // 得到该控件
             GridView theGrid = sender as GridView;
@@ -84,30 +95,10 @@ namespace WebApplication2NET
             theGrid.PageIndex = newPageIndex;
         }
 
-        protected void ButtonCleanInfo_Click(object sender, EventArgs e)
-        {
-            string sqlString = "DELETE FROM SysInfo";
-            SqlCommand cmd = new SqlCommand(sqlString, sConn);
-            cmd.ExecuteNonQuery();
-        }
-
-        protected void ButtonF_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("index.aspx");
-        }
-
-        protected void ButtonCleanInfoHis_Click(object sender, EventArgs e)
-        {
-            string sqlString = "DELETE FROM SysInfo_History";
-            SqlCommand cmd = new SqlCommand(sqlString, sConn);
-            cmd.ExecuteNonQuery();
-        }
-
         protected void LinkButton1_Click(object sender, EventArgs e)
         {
             Session["User"] = null;
             Response.Redirect("~/Login.aspx");
         }
     }
-    
 }

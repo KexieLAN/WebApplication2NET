@@ -1,34 +1,67 @@
-﻿#myHeader {
+﻿.myHeader {
     background-color: lightblue;
-    color: black;
+    /*color: black;*/
     padding: 40px;
     text-align: center;
 }
 
-#navZone {
+.navZone {
     background-color: aquamarine;
     color: black;
     padding: 5px;
 }
 
-#sub {
+.sub {
     color: black;
     text-align: center;
 }
 
-#importInfo {
+.importInfo {
     background-color: forestgreen;
 }
 
-#table_show_box {
+.table_show_box {
     border: aqua solid 1px;
     background-color: azure;
+    width: 100%;
 }
 
-#notFound {
+.notFound {
     background-color: crimson;
     color: black;
     padding: 40px;
     text-align: center;
     align-self: center;
+}
+.buttonSharp {
+    margin-inline-start: 10px;
+    margin-inline-end: 10px;
+    background-color: bisque;
+    text-align: center;
+    border-radius: 1px;
+}
+
+.text_show_box {
+    display: inline-block;
+    border: aqua solid 1px;
+    background-color: azure;
+    width: fit-content;
+    height: auto;
+}
+
+.table_bk {
+    align-items: center;
+    margin: auto;
+    width: 800px;
+    height: auto;
+}
+
+.login {
+    align-items: center;
+    text-align: center;
+    margin: auto;
+}
+
+.chart {
+    margin: auto;
 }

@@ -11,7 +11,7 @@ namespace WebApplication2NET
 {
 
 
-    public partial class WebForm1
+    public partial class PartitionInfo
     {
 
         /// <summary>
@@ -22,6 +22,15 @@ namespace WebApplication2NET
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+
+        /// <summary>
+        /// ScriptManager1 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
         /// HyperLink_Home 控件。
@@ -78,24 +87,6 @@ namespace WebApplication2NET
         protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
 
         /// <summary>
-        /// Label_Sta 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        public global::System.Web.UI.WebControls.Label Label_Sta;
-
-        /// <summary>
-        /// ScriptManager1 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
-
-        /// <summary>
         /// Label1 控件。
         /// </summary>
         /// <remarks>
@@ -114,15 +105,6 @@ namespace WebApplication2NET
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
-        /// Chart1 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.DataVisualization.Charting.Chart Chart1;
-
-        /// <summary>
         /// GridView1 控件。
         /// </summary>
         /// <remarks>
@@ -132,22 +114,22 @@ namespace WebApplication2NET
         protected global::System.Web.UI.WebControls.GridView GridView1;
 
         /// <summary>
-        /// SqlDataSourceSysInfo 控件。
+        /// SqlDataSourceBugInfo 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceSysInfo;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceBugInfo;
 
         /// <summary>
-        /// TimersysInfo 控件。
+        /// TimerparInfo 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.Timer TimersysInfo;
+        protected global::System.Web.UI.Timer TimerparInfo;
 
         /// <summary>
         /// ButtonCleanInfo 控件。
@@ -195,39 +177,39 @@ namespace WebApplication2NET
         protected global::System.Web.UI.WebControls.GridView GridView2;
 
         /// <summary>
-        /// SqlDataSourceSysInfo0 控件。
+        /// SqlDataSourceBugInfoHis 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceSysInfo0;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceBugInfoHis;
 
         /// <summary>
-        /// TimersysInfoHis 控件。
+        /// TimerparInfoHis 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.Timer TimersysInfoHis;
+        protected global::System.Web.UI.Timer TimerparInfoHis;
 
         /// <summary>
-        /// Button1 控件。
+        /// ButtonClearHis 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button ButtonClearHis;
 
         /// <summary>
-        /// Button2 控件。
+        /// ButtonF2 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Button ButtonF2;
     }
 }
